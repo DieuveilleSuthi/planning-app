@@ -1,13 +1,13 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Image, Text, Pressable } from 'react-native';
+import { View, ScrollView, Image, Text, Pressable } from 'react-native';
 
 import styles from './HomeScreenCss.js';
 
 const HomeScreen = () => {
     const navigation = useNavigation();
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View>
                 <Image source={{ uri: "https://www.thelinkottawa.ca/en/eat-right-be-active/resources/Images/running-1065.jpg" }} style={styles.image} />
                 <View style={styles.textContainer}>
@@ -28,7 +28,7 @@ const HomeScreen = () => {
                     <Text> Create or Modify your planning</Text>
                 </Pressable>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 

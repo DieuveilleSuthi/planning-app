@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import { endAsyncEvent } from "react-native/Libraries/Performance/Systrace";
 
 export default StyleSheet.create(
     {
@@ -20,10 +19,12 @@ export default StyleSheet.create(
             marginLeft: 15
         },
         image: {
-            width: 350,
+            padding: 10,
             height: 200,
             marginLeft: 20,
-            borderRadius: 10
+            marginRight: 20,
+            borderRadius: 10,
+            marginVertical: 10
         },
         textContainer: {
             position: 'absolute',
