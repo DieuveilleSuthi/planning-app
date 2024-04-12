@@ -19,3 +19,15 @@ exports.createPlanning = async (req, res, next) => {
         });
     }
 };
+
+exports.getAllPlanning = async (req, res, next) => {
+     const plannings = await Planning.find(req.query);
+
+     res.status(200).json({
+        status: 'success',
+        results: plannings.length,
+        data: {
+            plannings 
+        }
+    });
+};
