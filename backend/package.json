@@ -1,0 +1,17 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "planning app backend",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "debug": "ndb server.js"
+  },
+  "author": "Dieuveille Suthi",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.1"
+  }
+}
