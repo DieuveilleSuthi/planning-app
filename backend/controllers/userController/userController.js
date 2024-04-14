@@ -43,3 +43,30 @@ exports.login = async(req, res, next) => {
         }
     });
 }
+
+exports.authenticate = async (req, res, next) => {
+    try {
+        // Vérifier si le token est présent dans le header Authorization
+        if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer')) {
+            return res.status(401).json({ message: 'Unauthorized, Please login to get acces' });
+        }
+
+        // Extraire le token du header Authorization
+        const token = req.headers.authorization.split(' ')[1];
+
+        // Vérifier la validité du token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        // Vérifier si l'utilisateur existe
+        const user = await User.findById(decoded.id);
+        if (!user) {
+            return res.status(401).json({ message: 'Unauthorized, the user does not exist' });
+        }
+
+        // Ajouter l'utilisateur au corps de la requête pour une utilisation ultérieure
+        req.user = user;
+        next();
+    } catch (error) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
+};
