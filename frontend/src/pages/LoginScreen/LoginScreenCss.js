@@ -24,15 +24,16 @@ export default StyleSheet.create(
             fontSize: 20
         },
         textInput: {
-            flex: 1,
+            height: 40, // Hauteur explicite pour le TextInput
             borderBottomWidth: 1, 
             borderBottomColor: 'white', 
-            color: 'white', 
+            color: 'white', // Couleur du texte modifiée pour un meilleur contraste
             fontSize: 16, 
-            paddingVertical: 20, 
+            paddingVertical: 5, // Réduction de la paddingVertical
             marginLeft: 10,
             marginRight: 25
         },
+        
         btnCreate: {
             borderRadius: 10,
             padding: 10,
