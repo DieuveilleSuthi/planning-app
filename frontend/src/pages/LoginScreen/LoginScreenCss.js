@@ -15,6 +15,11 @@ export default StyleSheet.create(
             fontSize: 20,
             fontWeight: 'bold'
         },
+        textError:{
+            color: 'red',
+            fontSize: 20,
+            fontWeight: 'bold'       
+        },
         DetailContent: {
             marginVertical: 10,
             marginLeft: 20

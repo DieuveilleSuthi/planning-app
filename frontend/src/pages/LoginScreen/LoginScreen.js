@@ -8,10 +8,10 @@ const LoginScreen = () => {
     const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleLoginPress = async () => {
         try {
-            // Envoyer les données à votre backend
             const response = await fetch('http://10.3.218.6:3000/api/v1/user/login', {
                 method: 'POST',
                 headers: {
@@ -20,30 +20,36 @@ const LoginScreen = () => {
                 body: JSON.stringify({ email, password })
             });
     
+            if (!email || !password) {
+                setErrorMessage('Veillez saisir tous les champs!');
+                return;
+            }
+    
             // Gérer la réponse de votre backend
             if (response.ok) {
                 const responseData = await response.json();
                 const token = responseData.token;
     
-                // Stocker le token dans AsyncStorage
                 await AsyncStorage.setItem('token', token);
     
                 navigation.navigate('Main');
             } else {
-                // Gérer les erreurs
-                const errorData = await response.json(); // Obtenir les détails de l'erreur
-                console.error('Error:', errorData);
-            }            
+                setErrorMessage('Email ou mot de passe incorrect.');
+            }
         } catch (error) {
             console.error('Error:', error);
         }
     };
+    
     
 
     return (
         <View style={styles.container}>
             <View style={styles.textContent}>
                 <Text style={styles.textItem}>Enter your email and your password</Text>
+            </View>
+            <View style={styles.textContent}>
+                <Text style={styles.textError}>{errorMessage}</Text>
             </View>
             <View style={styles.DetailContent}>
                 <Text style={styles.DetailItem}> email:</Text>
@@ -65,6 +71,12 @@ const LoginScreen = () => {
             <View style={styles.btnContainer}>
                 <Pressable style={styles.btnCreate} onPress={handleLoginPress}>
                     <Text>Login</Text>
+                </Pressable>
+            </View>
+            <View>
+                <Text style={{color: 'white'}}>Vous avez pas de compte?</Text>
+                <Pressable onPress={() => navigation.navigate('Register')}>
+                    <Text style={{color: 'white'}}>Cliquez ici</Text>
                 </Pressable>
             </View>
         </View>
