@@ -12,6 +12,13 @@ const RegisterScreen = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleLoginPress = async () => {
+        setErrorMessage('');
+
+        if (!username || !email || !password) {
+            setErrorMessage('Veuillez saisir tous les champs!');
+            return;
+        }
+
         try {
             const response = await fetch('http://10.3.218.6:3000/api/v1/user', {
                 method: 'POST',
@@ -20,27 +27,22 @@ const RegisterScreen = () => {
                 },
                 body: JSON.stringify({ username, email, password })
             });
-    
-            if (!email || !password) {
-                setErrorMessage('Veillez saisir tous les champs!');
+
+            if (!response.ok) {
+                setErrorMessage('Email ou mot de passe incorrect.');
                 return;
             }
-    
-            // Gérer la réponse de votre backend
-            if (response.ok) {
-                const responseData = await response.json();
-                const token = responseData.token;
-    
-                await AsyncStorage.setItem('token', token);
-    
-                navigation.navigate('Main');
-            } 
+
+            const responseData = await response.json();
+            const token = responseData.token;
+
+            await AsyncStorage.setItem('token', token);
+
+            navigation.navigate('Main');
         } catch (error) {
             console.error('Error:', error);
         }
     };
-    
-    
 
     return (
         <View style={styles.container}>
@@ -77,7 +79,13 @@ const RegisterScreen = () => {
             </View>
             <View style={styles.btnContainer}>
                 <Pressable style={styles.btnCreate} onPress={handleLoginPress}>
-                    <Text>Login</Text>
+                    <Text>Register</Text>
+                </Pressable>
+            </View>
+            <View style={styles.registerCo}>
+                <Text style={{color: 'white'}}>Vous déjà un compte?</Text>
+                <Pressable onPress={() => navigation.navigate('Login')} style={styles.click}>
+                    <Text style={{color: 'white'}}> Connectez vous</Text>
                 </Pressable>
             </View>
         </View>

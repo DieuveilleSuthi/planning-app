@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Pressable } from "react-native";
+import { View, Text, TextInput, Pressable, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './LoginScreenCss'
@@ -11,6 +11,13 @@ const LoginScreen = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleLoginPress = async () => {
+        setErrorMessage('');
+
+        if (!email || !password) {
+            setErrorMessage('Veillez saisir tous les champs!');
+            return;
+        }
+
         try {
             const response = await fetch('http://10.3.218.6:3000/api/v1/user/login', {
                 method: 'POST',
@@ -19,11 +26,6 @@ const LoginScreen = () => {
                 },
                 body: JSON.stringify({ email, password })
             });
-    
-            if (!email || !password) {
-                setErrorMessage('Veillez saisir tous les champs!');
-                return;
-            }
     
             // Gérer la réponse de votre backend
             if (response.ok) {
@@ -73,10 +75,10 @@ const LoginScreen = () => {
                     <Text>Login</Text>
                 </Pressable>
             </View>
-            <View>
+            <View style={styles.registerCo}>
                 <Text style={{color: 'white'}}>Vous avez pas de compte?</Text>
-                <Pressable onPress={() => navigation.navigate('Register')}>
-                    <Text style={{color: 'white'}}>Cliquez ici</Text>
+                <Pressable onPress={() => navigation.navigate('Register')} style={styles.click}>
+                    <Text style={{color: 'white'}}> Cliquez ici</Text>
                 </Pressable>
             </View>
         </View>

@@ -29,12 +29,12 @@ export default StyleSheet.create(
             fontSize: 20
         },
         textInput: {
-            height: 40, // Hauteur explicite pour le TextInput
+            height: 40, 
             borderBottomWidth: 1, 
             borderBottomColor: 'white', 
-            color: 'white', // Couleur du texte modifiée pour un meilleur contraste
+            color: 'white', 
             fontSize: 16, 
-            paddingVertical: 5, // Réduction de la paddingVertical
+            paddingVertical: 5, 
             marginLeft: 10,
             marginRight: 25
         },
@@ -52,6 +52,20 @@ export default StyleSheet.create(
             flexDirection: 'row',
             marginBottom: 100,
             marginVertical: 50,
-        }
+        },
+        registerCo: {
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        
+        click:{
+            borderRadius: 10,
+            padding: 10,
+            backgroundColor: '#87CEEB',
+            alignItems: 'center',
+            marginLeft: 5,
+            alignSelf: 'center'
+        },
     }
 )

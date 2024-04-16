@@ -52,6 +52,20 @@ export default StyleSheet.create(
             flexDirection: 'row',
             marginBottom: 100,
             marginVertical: 50,
-        }
+        },
+        registerCo: {
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        
+        click:{
+            borderRadius: 10,
+            padding: 10,
+            backgroundColor: '#87CEEB',
+            alignItems: 'center',
+            marginLeft: 5,
+            alignSelf: 'center'
+        },
     }
 )
