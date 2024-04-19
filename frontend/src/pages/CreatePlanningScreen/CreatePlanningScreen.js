@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Pressable, TouchableOpacity, TextInput } from '
 import { useNavigation } from '@react-navigation/native';
 import { DatePickerInput, TimePickerModal, registerTranslation } from 'react-native-paper-dates';
 import styles from './CreatePlanningScreenCss';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Register 'fr' locale settings
 registerTranslation('fr', {
@@ -29,6 +30,34 @@ const CreatePlanningScreen = () => {
   const [visible, setVisible] = useState(false);
   const [selectedActivityId, setSelectedActivityId] = useState(null);
   const [currentPickerTime, setCurrentPickerTime] = useState({ hours: 12, minutes: 14 });
+
+
+  const handleSubmit = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const response = await fetch('http://10.101.6.7:3000/api/v1/planning', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` 
+        },
+        body: JSON.stringify(activities),
+      });
+
+      if (response.ok) {
+        // Affichez un message de succès ou effectuez une action appropriée
+        console.log('Data successfully sent to the database');
+        navigation.navigate('Program', { activities });
+
+      } else {
+        // Gérez les erreurs en cas de problème avec la requête
+        console.error('Failed to send data to the database');
+      }
+    } catch (error) {
+      // Gérez les erreurs en cas de problème avec la requête
+      console.error('Error:', error);
+    }
+  };
 
   const onDismiss = useCallback(() => {
     setVisible(false);
@@ -123,7 +152,7 @@ const CreatePlanningScreen = () => {
         <Pressable style={styles.btnCreate} onPress={handleAddActivity}>
           <Text> Add New Activity </Text>
         </Pressable>
-        <Pressable style={styles.btnCreate} onPress={() => navigation.navigate('Program', { activities })}>
+        <Pressable style={styles.btnCreate} onPress={handleSubmit}>
           <Text> Create </Text>
         </Pressable>
       </View>
