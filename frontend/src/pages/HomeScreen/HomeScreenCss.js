@@ -31,6 +31,9 @@ export default StyleSheet.create(
             top: 10,
             left: 20
         },
+        textSep: {
+            marginVertical: 5
+        },
         ButtonContainer: {
             position: 'absolute',
             top: 150,
