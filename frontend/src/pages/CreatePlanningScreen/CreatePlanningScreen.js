@@ -116,12 +116,16 @@ const CreatePlanningScreen = () => {
           <View style={styles.DetailContentDate}>
             <Text style={styles.DetailItem}> Date:</Text>
             <DatePickerInput
-                locale="fr"
-                label="Click and choose your date"
-                value={activity.date}
-                onChange={(d) => updateActivityField(activity.id, 'date', d)}
-                inputMode="start"
-                style={styles.textInputDate}
+              locale="fr"
+              label="Click and choose your date"
+              value={activity.date} 
+              onChange={(d) => {
+                const selectedDate = new Date(d);
+                selectedDate.setDate(selectedDate.getDate() + 1); 
+                updateActivityField(activity.id, 'date', selectedDate);
+              }}              
+              inputMode="start"
+              style={styles.textInputDate}
             />
           </View>
           <View style={styles.DetailContent}>
