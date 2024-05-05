@@ -1,12 +1,13 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../../pages/HomeScreen/HomeScreen';
-import MessageScreen from '../../pages/MessageScreen/MessageScreen';
+import PastActivityScreen from '../../pages/PastActivityScreen/PastActivityScreen';
 import PlanningScreen from '../../pages/PlanningScreen/PlanningScreen';
 import SettingsScreen from '../../pages/SettingsScreen/SettingsScreen';
 import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
@@ -45,11 +46,11 @@ const BottomNav = () => {
         }} 
       />
       <Tab.Screen 
-        name='Message' 
-        component={MessageScreen}
+        name='Past' 
+        component={PastActivityScreen}
         options={{
           tabBarIcon: ({focused}) => (
-            <AntDesign name="message1" size={24} color={focused? "#87CEEB": "grey"} />
+            <Feather name="activity" size={24} color={focused? "#87CEEB": "grey"} />
           )
         }}  
       />

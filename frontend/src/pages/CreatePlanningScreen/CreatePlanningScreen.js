@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, ScrollView, Pressable, TouchableOpacity, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { DatePickerInput, TimePickerModal, registerTranslation } from 'react-native-paper-dates';
@@ -25,12 +25,23 @@ registerTranslation('fr', {
 
 const CreatePlanningScreen = () => {
   const navigation = useNavigation();
-  const [activities, setActivities] = useState([{ id: 1, date: new Date(), time: '', title: '', description: '' }]);
+  const [activities, setActivities] = useState([{ id: 1, date: new Date(), time: '', title: '', description: '', userId: null }]);
   const [inputDate, setInputDate] = useState(new Date());
   const [visible, setVisible] = useState(false);
   const [selectedActivityId, setSelectedActivityId] = useState(null);
   const [currentPickerTime, setCurrentPickerTime] = useState({ hours: 12, minutes: 14 });
 
+  useEffect(() => {
+    const fetchUserId = async () => {
+      try {
+        const userId = await AsyncStorage.getItem('userId');
+        setActivities(prevActivities => prevActivities.map(activity => ({ ...activity, userId })));
+      } catch (error) {
+        console.error('Error fetching user ID:', error);
+      }
+    };
+    fetchUserId();
+  }, []);
 
   const handleSubmit = async () => {
     try {
@@ -45,16 +56,12 @@ const CreatePlanningScreen = () => {
       });
 
       if (response.ok) {
-        // Affichez un message de succès ou effectuez une action appropriée
         console.log('Data successfully sent to the database');
         navigation.navigate('Program', { activities });
-
       } else {
-        // Gérez les erreurs en cas de problème avec la requête
         console.error('Failed to send data to the database');
       }
     } catch (error) {
-      // Gérez les erreurs en cas de problème avec la requête
       console.error('Error:', error);
     }
   };
@@ -66,20 +73,12 @@ const CreatePlanningScreen = () => {
   const onConfirm = useCallback(({ hours, minutes }) => {
     setVisible(false);
     const formattedTime = `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
-    // Update time for the selected activity
-    setActivities((currentActivities) =>
-      currentActivities.map((activity) => {
-        if (activity.id === selectedActivityId) {
-          return { ...activity, time: formattedTime };
-        }
-        return activity;
-      })
-    );
+    setActivities(prevActivities => prevActivities.map(activity => activity.id === selectedActivityId ? { ...activity, time: formattedTime } : activity));
   }, [selectedActivityId]);
 
   const handleAddActivity = useCallback(() => {
     const newActivityId = activities.length + 1;
-    setActivities([...activities, { id: newActivityId, time: '', title: '', description: '' }]);
+    setActivities(prevActivities => [...prevActivities, { id: newActivityId, time: '', title: '', description: '', userId: null }]);
   }, [activities]);
 
   const openTimePicker = useCallback((activityId) => {
@@ -93,14 +92,7 @@ const CreatePlanningScreen = () => {
   }, [activities]);
 
   const updateActivityField = useCallback((activityId, field, value) => {
-    setActivities((currentActivities) =>
-      currentActivities.map((activity) => {
-        if (activity.id === activityId) {
-          return { ...activity, [field]: value };
-        }
-        return activity;
-      })
-    );
+    setActivities(prevActivities => prevActivities.map(activity => activity.id === activityId ? { ...activity, [field]: value } : activity));
   }, []);
 
   return (

@@ -51,18 +51,12 @@ export default StyleSheet.create(
         dateHeaderText: {
             color: 'white',
         },
-        click:{
-            borderRadius: 10,
-            padding: 10,
-            backgroundColor: '#87CEEB',
-            alignItems: 'center',
-            marginLeft: 5,
-            alignSelf: 'center'
-        },
-        registerCo: {
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-        },
+        noActivityText: {
+            color: '#87CEEB',
+            fontSize: 25,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            marginVertical: 250
+        }
     }
 )

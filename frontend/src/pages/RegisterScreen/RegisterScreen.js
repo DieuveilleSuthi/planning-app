@@ -83,9 +83,9 @@ const RegisterScreen = () => {
                 </Pressable>
             </View>
             <View style={styles.registerCo}>
-                <Text style={{color: 'white'}}>Vous déjà un compte?</Text>
+                <Text style={{color: 'white'}}>Already have an account?</Text>
                 <Pressable onPress={() => navigation.navigate('Login')} style={styles.click}>
-                    <Text style={{color: 'white'}}> Connectez vous</Text>
+                    <Text style={{color: 'white'}}> Login </Text>
                 </Pressable>
             </View>
         </View>

@@ -15,7 +15,8 @@ const planningSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-    }
+    },
+    userId: String
 });
 
 const Planning = mongoose.model('Planning', planningSchema);

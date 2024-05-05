@@ -31,6 +31,9 @@ const LoginScreen = () => {
             if (response.ok) {
                 const responseData = await response.json();
                 const token = responseData.token;
+                const userId = responseData.data.User._id;
+
+                await AsyncStorage.setItem('userId', userId);
     
                 await AsyncStorage.setItem('token', token);
     
@@ -76,9 +79,9 @@ const LoginScreen = () => {
                 </Pressable>
             </View>
             <View style={styles.registerCo}>
-                <Text style={{color: 'white'}}>Vous avez pas de compte?</Text>
+                <Text style={{color: 'white'}}>you don't have an account?</Text>
                 <Pressable onPress={() => navigation.navigate('Register')} style={styles.click}>
-                    <Text style={{color: 'white'}}> Cliquez ici</Text>
+                    <Text style={{color: 'white'}}> Click here</Text>
                 </Pressable>
             </View>
         </View>
