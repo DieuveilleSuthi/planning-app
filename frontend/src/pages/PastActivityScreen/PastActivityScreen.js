@@ -54,6 +54,14 @@ const PastActivityScreen = () => {
 
     const sortedDates = Object.keys(groupedPlannings).sort((a, b) => new Date(a) - new Date(b));
 
+    const storeActivityId = async (activityId) => {
+        try {
+            await AsyncStorage.setItem('activityId', activityId);
+        } catch (error) {
+            console.error('Error storing activity ID:', error);
+        }
+    };
+
     return (
         <ScrollView style={styles.container}>
             <View style={styles.textContent}>
@@ -75,7 +83,12 @@ const PastActivityScreen = () => {
                             </Text>
                         </View>
                         {groupedPlannings[date].map((planning, idx) => (
-                            <Pressable key={idx} style={styles.activityCard} onPress={()=> navigation.navigate('ActivityDescription')}>
+                            <Pressable key={idx} style={styles.activityCard} 
+                                onPress={()=> {
+                                    storeActivityId(planning._id);
+                                    navigation.navigate('ActivityDescription')
+                                }}
+                            >
                                 <View style={styles.cardContent}>
                                     <View style={styles.textStart}>
                                         <Text style={styles.textItem1}>{planning.title}</Text>
