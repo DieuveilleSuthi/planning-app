@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Pressable } from 'react-native';
 import styles from './PastActivityScreenCss';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 const PastActivityScreen = () => {
+    const navigation = useNavigation()
     const [plannings, setPlannings] = useState([]);
 
     useFocusEffect(
@@ -14,7 +16,7 @@ const PastActivityScreen = () => {
                     const token = await AsyncStorage.getItem('token');
                     const userId = await AsyncStorage.getItem('userId');
                     if (token) {
-                        const response = await fetch('http://10.188.120.127:3000/api/v1/planning', {
+                        const response = await fetch('http://10.3.218.161:3000/api/v1/planning', {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -73,7 +75,7 @@ const PastActivityScreen = () => {
                             </Text>
                         </View>
                         {groupedPlannings[date].map((planning, idx) => (
-                            <View key={idx} style={styles.activityCard}>
+                            <Pressable key={idx} style={styles.activityCard} onPress={()=> navigation.navigate('ActivityDescription')}>
                                 <View style={styles.cardContent}>
                                     <View style={styles.textStart}>
                                         <Text style={styles.textItem1}>{planning.title}</Text>
@@ -84,7 +86,7 @@ const PastActivityScreen = () => {
                                         <Text style={styles.textItem3}>{planning.time}</Text>
                                     </View>
                                 </View>
-                            </View>
+                            </Pressable>
                         ))}
                     </View>
                 ))

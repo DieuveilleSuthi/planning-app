@@ -6,6 +6,7 @@ import BottomNav from './src/components/BottomNav/BottomNav';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import LoginScreen from './src/pages/LoginScreen/LoginScreen';
 import RegisterScreen from './src/pages/RegisterScreen/RegisterScreen';
+import ActivityDescription from './src/pages/ActivityDescription/ActivityDescription';
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,7 @@ function AppContent() {
           <Stack.Screen name="Main" component={BottomNav} />
           <Stack.Screen name="CreatePlanning" component={CreatePlanningScreen} />
           <Stack.Screen name='Register' component={RegisterScreen} />
+          <Stack.Screen name='ActivityDescription' component={ActivityDescription} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
