@@ -7,6 +7,7 @@ import styles from './ActivityDescriptionCss';
 const ActivityDescription = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [activityDetails, setActivityDetails] = useState([]);
+    const [newDescription, setNewDescription] = useState('');
 
     useFocusEffect(
         useCallback(() => {
@@ -41,6 +42,28 @@ const ActivityDescription = () => {
 
         }, [])
     );
+
+    const handleModifyDescription = async () => {
+        try {
+            const token = await AsyncStorage.getItem('token');
+            const activityId = await AsyncStorage.getItem('activityId');
+            const response = await fetch(`http://10.245.120.127:3000/api/v1/planning/${activityId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ description: newDescription })
+            });
+            if (!response.ok) {
+                throw new Error('Failed to update activity description');
+            }
+            setActivityDetails({ ...activityDetails, description: newDescription });
+            setModalVisible(false);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
 
 
     return (
@@ -91,13 +114,23 @@ const ActivityDescription = () => {
                         <TextInput 
                             style={styles.textInput}
                             placeholder='Modify your note/description here'
+                            value={newDescription}
+                            onChangeText={setNewDescription}
                         />
-                        <Pressable
-                            style={styles.button}
-                            onPress={() => setModalVisible(!modalVisible)}
-                        >
-                            <Text style={styles.textStyle}>Close</Text>
-                        </Pressable>
+                        <View style={styles.blocRow}>
+                            <Pressable
+                                style={styles.button}
+                                onPress={handleModifyDescription}
+                            >
+                                <Text style={styles.textStyle}>Modify</Text>
+                            </Pressable>
+                            <Pressable
+                                style={styles.button}
+                                onPress={() => setModalVisible(!modalVisible)}
+                            >
+                                <Text style={styles.textStyle}>Close</Text>
+                            </Pressable>
+                        </View>
                     </View>
                 </View>
             </Modal>

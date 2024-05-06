@@ -82,7 +82,6 @@ export default StyleSheet.create(
             borderRightColor:'#87CEEB',
             borderBottomWidth: 1, 
             borderBottomColor: '#87CEEB', 
-            color: '#87CEEB', 
             fontSize: 16, 
             marginVertical: 10
 
