@@ -16,7 +16,7 @@ const PlanningScreen = () => {
                     const token = await AsyncStorage.getItem('token');
                     const userId = await AsyncStorage.getItem('userId');
                     if (token) {
-                        const response = await fetch('http://10.3.218.161:3000/api/v1/planning', {
+                        const response = await fetch('http://10.245.120.127:3000/api/v1/planning', {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -56,6 +56,14 @@ const PlanningScreen = () => {
 
     const sortedDates = Object.keys(groupedPlannings).sort((a, b) => new Date(a) - new Date(b));
 
+    const storeActivityId = async (activityId) => {
+        try {
+            await AsyncStorage.setItem('activityId', activityId);
+        } catch (error) {
+            console.error('Error storing activity ID:', error);
+        }
+    };
+
     return (
         <ScrollView style={styles.container}>
             <View style={styles.textContent}>
@@ -85,7 +93,14 @@ const PlanningScreen = () => {
                         </Text>
                     </View>
                     {groupedPlannings[date].map((planning, idx) => (
-                        <Pressable key={idx} style={styles.activityCard} onPress={()=> navigation.navigate('ActivityDescription')}>
+                        <Pressable
+                            key={idx}
+                            style={styles.activityCard}
+                            onPress={() => {
+                                storeActivityId(planning._id);
+                                navigation.navigate('ActivityDescription');
+                            }}
+                        >
                             <View style={styles.cardContent}>
                                 <View style={styles.textStart}>
                                     <Text style={styles.textItem1}>{planning.title}</Text>
