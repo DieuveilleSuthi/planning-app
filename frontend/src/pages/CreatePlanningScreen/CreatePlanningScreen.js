@@ -29,7 +29,7 @@ const CreatePlanningScreen = () => {
   const [inputDate, setInputDate] = useState(new Date());
   const [visible, setVisible] = useState(false);
   const [selectedActivityId, setSelectedActivityId] = useState(null);
-  const [currentPickerTime, setCurrentPickerTime] = useState({ hours: 12, minutes: 14 });
+  const [currentPickerTime, setCurrentPickerTime] = useState({ hours: 12, minutes: 15 });
 
   useEffect(() => {
     const fetchUserId = async () => {
