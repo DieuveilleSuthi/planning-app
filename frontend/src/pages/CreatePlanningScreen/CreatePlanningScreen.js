@@ -46,7 +46,7 @@ const CreatePlanningScreen = () => {
   const handleSubmit = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
-      const response = await fetch('http://10.245.120.127:3000/api/v1/planning', {
+      const response = await fetch('http://10.245.120.128:3000/api/v1/planning', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

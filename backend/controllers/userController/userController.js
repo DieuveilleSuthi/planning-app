@@ -7,21 +7,37 @@ const signToken = id => {
     })
 }
 
-exports.createUser = async(req, res, next) => {
-    const newUser = await User.create(req.body);
-    const token = signToken(newUser._id);
+exports.createUser = async (req, res, next) => {
+    try {
+        console.log("Creating user...");
+        const newUser = await User.create(req.body);
+        console.log("User created:", newUser);
 
-    res.status(201).json({
-        status: 'success',
-        token, 
-        data: {
-            User: newUser
-        }
-    });
-}  
+        const token = signToken(newUser._id);
+        console.log("Token generated:", token);
+
+        res.status(201).json({
+            status: 'success',
+            token,
+            data: {
+                user: newUser
+            }
+        });
+    } catch (err) {
+        console.error("Error creating user:", err);
+        res.status(500).json({
+            status: 'error',
+            message: 'Something went wrong'
+        });
+    }
+};
+
 
 exports.login = async(req, res, next) => {
     const {email, password} = req.body;
+
+    console.log("Logging in user...");
+    console.log("Email:", email);
 
     if (!email || !password) {
         return res.status(400).json({ message: "Veuillez saisir l'email et le mot de passe." });
@@ -29,11 +45,15 @@ exports.login = async(req, res, next) => {
 
     const user = await User.findOne({email}).select('+password');
 
+    console.log("User found:", user);
+
     if(!user || !(await user.correctPassword(password, user.password))) {
+        console.log("Invalid email or password.");
         return res.status(401).json({ message: "l'email ou le mot de passe est incorrect" });
     }
 
     const token = signToken(user._id); 
+    console.log("Token generated:", token);
 
     res.status(200).json({
         status: 'success',

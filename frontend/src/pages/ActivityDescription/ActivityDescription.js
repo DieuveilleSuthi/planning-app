@@ -16,7 +16,7 @@ const ActivityDescription = () => {
                     const token = await AsyncStorage.getItem('token');
                     const activityId = await AsyncStorage.getItem('activityId');
                     if (token) {
-                        const response = await fetch(`http://10.245.120.127:3000/api/v1/planning/${activityId}`, {
+                        const response = await fetch(`http://10.245.120.128:3000/api/v1/planning/${activityId}`, {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ const ActivityDescription = () => {
         try {
             const token = await AsyncStorage.getItem('token');
             const activityId = await AsyncStorage.getItem('activityId');
-            const response = await fetch(`http://10.245.120.127:3000/api/v1/planning/${activityId}`, {
+            const response = await fetch(`http://10.245.120.128:3000/api/v1/planning/${activityId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
